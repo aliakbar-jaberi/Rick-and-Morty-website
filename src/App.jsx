@@ -168,7 +168,7 @@ function App() {
       </Navbar>
       <div className="main">
         <div className="characters-list ">
-          <div className="titel">
+          <div className="titel-fiex">
             <div className="icon">
               <QueueListIcon />
             </div>
@@ -194,7 +194,7 @@ function App() {
           )}
         </div>
         <div style={{ flex: 1 }}>
-          <div className="titel">
+          <div className="titel-fiex">
             <div className="icon">
               <IdentificationIcon />
             </div>

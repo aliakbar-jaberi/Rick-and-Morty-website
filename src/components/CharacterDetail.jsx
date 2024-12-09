@@ -198,9 +198,8 @@ function Episodes({ episodes, episodesIsLoder }) {
         <h2>List of Episodes:</h2>
         <button onClick={() => setSortby((is) => !is)}>
           <ArrowUpCircleIcon
-            className="icon"
+            className={`icon `}
             style={{ rotate: sortBy ? "0deg" : "180deg" }}
-            // style={{ rotate: sortBy ? "0deg" : "180deg" }}
           />
         </button>
       </div>

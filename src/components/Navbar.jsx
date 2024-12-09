@@ -1,4 +1,9 @@
-import { EyeIcon, EyeSlashIcon, HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  HeartIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Modal from "./Modal";
 import { Character } from "./ChracterList";
@@ -39,7 +44,12 @@ export function Sarch({ query, steQueary, findNamber }) {
   );
 }
 
-export function Favourites({ Favourite, DeleteFavourite, slectId, onSlectItem }) {
+export function Favourites({
+  Favourite,
+  DeleteFavourite,
+  slectId,
+  onSlectItem,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
