@@ -10,14 +10,19 @@ import axios from "axios";
 import NotFined from "./components/NotFined";
 import { IdentificationIcon, QueueListIcon } from "@heroicons/react/24/solid";
 import Modal from "./components/Modal";
+import useCharacter from "./Hooks/useCharacter";
+import useSrechCharacter from "./Hooks/useSrechCharacter";
 
 function App() {
-  const [characters, setCharacters] = useState([]);
-  const [isLoder, setIsLoder] = useState(false);
   const [query, steQueary] = useState("");
-  const [findNamber, setFindNamber] = useState(0);
+  const { characters, isLoder, findNamber } = useCharacter(
+    "https://rickandmortyapi.com/api/character",
+    query
+  );
   const [slectId, steSlectId] = useState(null);
-  const [favourite, setFavourite] = useState([]);
+  const [favourite, setFavourite] = useState(
+    () => JSON.parse(localStorage.getItem("Favourite")) || []
+  );
 
   // useEffect(() => {
   //   fetch("https://rickandmortyapi.com/api/character")
@@ -61,88 +66,14 @@ function App() {
   //   }
   //   fetchDta();
   // }, [])
-  useEffect(() => {
-    async function fetchDta() {
-      try {
-        setIsLoder(true);
-        const { data } = await axios.get(
-          "https://rickandmortyapi.com/api/character"
-        );
 
-        setCharacters(data.results);
-
-        // setIsLoder(false);
-      } catch (err) {
-        toast.error(
-          err.response.data.error,
-          // err.response.data.message,
-
-          {
-            style: {
-              padding: "10px",
-              color: "#f1f5f9",
-              background: "#334155",
-            },
-            iconTheme: {
-              primary: "#e11d48",
-              secondary: "#FFFAEE",
-            },
-          }
-        );
-      } finally {
-        setIsLoder(false);
-      }
-    }
-    fetchDta();
-  }, []);
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    async function fetchDta() {
-      try {
-        setIsLoder(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character?name=${query}`,
-          { signal }
-        );
-
-        setCharacters(data.results);
-
-        setFindNamber(data.results.length);
-        // setIsLoder(false);
-      } catch (err) {
-        setCharacters([]);
-        setFindNamber(0);
-        toast.error(
-          "No items found.",
-          // err.response.data.message,
-
-          {
-            style: {
-              padding: "10px",
-              color: "#f1f5f9",
-              background: "#334155",
-            },
-            iconTheme: {
-              primary: "#e11d48",
-              secondary: "#FFFAEE",
-            },
-          }
-        );
-      } finally {
-        setIsLoder(false);
-      }
-    }
-    fetchDta();
-    return ()=>{
-      controller.abort()
-    }
-  }, [query]);
   const onSlectItem = (id) => {
     if (id == slectId) steSlectId(null);
     else steSlectId(id);
   };
-
+  useEffect(() => {
+    localStorage.setItem("Favourite", JSON.stringify(favourite));
+  }, [favourite]);
   const handleAddToFavourite = (cre) => {
     setFavourite([...favourite, cre]);
   };
